@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="style.css">
-    <title>rps.io</title>
-  </head>
 
-  <body>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Paytone+One" rel="stylesheet">
+  <title>rps.io</title>
+</head>
 
-  </body>
+<body>
+  <div id="game">
+    <div id="header">
+      <header>
+        <h1>Rock Paper Scissors!</h1>
+      </header>
+    </div>
+    <div id="login">
+      <input type="text" name="username" id="username" value="" placeholder="please enter your username...">
+      <input type="password" name="password" id="password" value="" placeholder="please enter your password...">
+      <button type="button" name="button">Login</button>
+    </div>
+    <!-- <div id="choices">
+      <button type="button" name="playFriend" id="playFriend">Play against friend!</button>
+      <button type="button" name="playRandom" id="playRandom">Play against random!</button>
+    </div> -->
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="index.js"></script>
+</body>
+
 </html>
