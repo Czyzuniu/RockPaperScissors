@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>register your account!</title>
+      <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css?family=Paytone+One" rel="stylesheet">
+  </head>
+  <body>
+    <div id="wrap">
+      <div id="header">
+        <header>
+          <h1>Rock Paper Scissors!</h1>
+        </header>
+      </div>
+      <form method="post"  id="registerAccount" action="/registerAccount">
+        <input type="text" name="onlineId" id="onlineId" placeholder="Please enter onlineId" required
+        maxlength="15" min="2">
+        <input type="password" title="password must be at least 8 character long" name="password" id="password"
+        placeholder="Please enter password" required pattern=".{8,}">
+        <input type="password" name="passwordRepeat" id="passwordRepeat"
+        placeholder="Please repeat password" pattern=".{8,}" title="password must be at least 8 character" required>
+        <button type="submit" id="register" name="register">Create Account!</button
+      </form>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  </body>
+  <script>
+
+  window.onlineId.addEventListener('change', function(){
+    $.ajax({
+      url: "/onlineIdUsed",
+      type: 'POST',
+      data : {onlineId:window.onlineId.value},
+      success: function(response){
+        if(response.status == "exists"){
+          window.onlineId.setCustomValidity("This onlineId is taken, try another one!")
+          $("#register").trigger('click');
+        }else{
+          window.onlineId.setCustomValidity("");
+        }
+      }
+    });
+  });
+
+  $('#registerAccount').submit(function(){
+    $.ajax({
+      url: $('#registerAccount').attr('action'),
+      type: 'POST',
+      data : $('#registerAccount').serialize(),
+      success: function(response){
+        if(response.status == "success"){
+          alert("account created!")
+          window.location = "/"
+        }
+      }
+    });
+    return false;
+  });
+
+
+
+
+  window.addEventListener('load', function(){
+    let password = window.password;
+    let repeatPassword = window.passwordRepeat;
+    let register = document.querySelector('button[name=register]');
+
+    function validatePassword(){
+    if(password.value != repeatPassword.value) {
+      repeatPassword.setCustomValidity("Passwords Don't Match");
+      repeatPassword.style.borderColor = "#FF4C26";
+    } else {
+      repeatPassword.setCustomValidity('');
+      repeatPassword.style.borderColor = null;
+    }
+}
+
+    password.onchange = validatePassword;
+    repeatPassword.onkeyup = validatePassword;
+
+  });
+  </script>
+</html>
