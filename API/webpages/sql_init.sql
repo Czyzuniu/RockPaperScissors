@@ -6,5 +6,6 @@ CREATE TABLE IF NOT EXISTS RPS.USERS (
   Id INT PRIMARY KEY auto_increment,
   OnlineId VARCHAR(25),
   Password VARCHAR(25),
-  SessionId VARCHAR(50)
+  SessionId VARCHAR(50),
+  profilepic VARCHAR(25)
 )charset 'utf8mb4';

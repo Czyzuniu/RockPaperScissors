@@ -1,10 +1,10 @@
 'use strict';
 
-let socket = io();
 let users = [];
 let name = window.playerName;
 let error = true;
 let loginButton = window.loginButton;
+
 
 
 loginButton.addEventListener('click', function(){
@@ -25,56 +25,27 @@ loginButton.addEventListener('click', function(){
     password.setCustomValidity("");
     password.style.borderColor = null;
   }
-});
 
-$('#login').submit(function(){
-  $.ajax({
-    url: $('#login').attr('action'),
-    type: 'POST',
-    data : $('#login').serialize(),
-    success: function(response){
-      if(response.status == "success"){
-        alert("logged in!");
-        window.location = '/home';
-      }else{
-        alert("something is not quite right")
+
+  $('#login').submit(function(e){
+    e.preventDefault();
+    $.ajax({
+      url: $('#login').attr('action'),
+      type: 'POST',
+      data : $('#login').serialize(),
+      success: function(response){
+        if(response.status == "success"){
+          alert("logged in!");
+          window.location = '/home';
+        }else{
+          alert("something is not quite right")
+        }
       }
-    }
+    });
+    return false;
   });
-  return false;
-});
-// name.addEventListener('input', () => {
-//   socket.emit('nameUpdate', name.value);
-//   if (name.value.length <= 2) {
-//     name.style.backgroundColor = 'red';
-//     error = true;
-//   } else {
-//     name.style.backgroundColor = 'lightgreen';
-//     error = false;
-//   }
-//
-//     disableButtons();
-// });
-
-socket.on('users', function(data){
-  users = data;
 });
 
-//
-// function disableButtons(){
-//   for(let i of buttons){
-//     if(error){
-//       i.disabled = true;
-//     }else{
-//       i.disabled = false;
-//     }
-//   }
-// }
-
-
-window.addEventListener('load', () =>{
-
-});
 
 
 window.registerRedirect.addEventListener('click', function(){

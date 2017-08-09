@@ -60,6 +60,7 @@ header h1{
   margin-bottom: 41px;
   font-size: 16px;
   border: 5px solid #00afc4;
+  border-radius: 20px;
 }
 
 #gameRules{
@@ -194,10 +195,11 @@ input[name=register]{
   /* border:1px solid black; */
   position: fixed;
   top: 0;
-  height: 5vh;
+  height: 10vh;
   width: 100%;
   display: inherit;
-  justify-content: center;
+  justify-content: space-around;
+  flex-direction: row;
 }
 
 
@@ -213,4 +215,36 @@ input[name=register]{
 #foot{
   height: 35px;
   text-align: center;
+  word-spacing: 10px;
+}
+
+#dialog{
+  position:absolute;
+}
+
+#userpanel > #avatar{
+  height: 64px;
+  width: 64px;
+  margin-top: 17.44px;
+  border: 1px dashed white;
+  border-radius: 360px;
+  background-size: cover;
+  background-position: center 0%;
+  /* background-size: 56px; */
+  background-repeat: no-repeat;
+  background-color: white;
+}
+
+
+#userpanel > button{
+  width: 90px;
+  font-size: 15px !important;
+  height: 40px;
+  /* margin-top: 17.44px; */
+  margin: 17.44px 0px 0px 0px;
+}
+
+#sendRequestDialog{
+  min-height:700px;
+  min-width:436.516px;
 }

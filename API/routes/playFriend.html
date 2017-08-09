@@ -15,17 +15,17 @@
       <p>
         Play up to how many wins?
       </p>
-      <input type="number" name="rounds" placeholder="Please enter number of rounds"/>
+      <input type="number" name="rounds" id="rounds" placeholder="Please enter number of rounds"/>
     </div>
 
     <div>
       <p>
         Your friends online id?
       </p>
-      <input type="text" name="friendId" placeholder="please enter your friends ID"/>
+      <input type="text" name="friendId" id="friendId" placeholder="please enter your friends ID"/>
     </div>
-
-    <button type="button" name="button">Send request</button>
+    <div id="dialog"></div>
+    <button type="button" id="sendRequest" name="button">Send request</button>
   </div>
   <script src="/socket.io/socket.io.js"></script>
   <script src="playFriend.js"></script>
