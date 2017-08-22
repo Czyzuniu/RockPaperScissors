@@ -24,6 +24,7 @@
   </div>
 
   <dialog id="sendRequestDialog" class="resizable">
+    <h1 id="closeDialog">X</h1>
     <div id="gameRules">
       <h1>Play a friend </h1>
       <div>
@@ -43,6 +44,17 @@
       <button type="button" id="sendRequest" name="button">Send request</button>
     </div>
   </dialog>
+  <dialog id="invitation">
+      <header>
+        <h1 id="invitationHeader">Game Request</h1>
+      </header>
+        <div id="invitationBody">
+          <p id="invitationBodyText">
+          </p>
+        </div>
+        <button id="acceptReq" type="button" name="acceptReq">Accept</button>
+        <button id="declineReq" type="button" name="declineReq">Decline</button>
+  </dialog>
   <script src="/socket.io/socket.io.js"></script>
   <script src="home.js"></script>
   </body>
@@ -50,11 +62,14 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
-
     $(function() {
         $( "#sendRequestDialog").resizable();
     });
   window.playFriend.addEventListener('click', function(){
       window.sendRequestDialog.showModal();
+  });
+
+  window.closeDialog.addEventListener('click', function(){
+    window.sendRequestDialog.close();
   });
 </script>

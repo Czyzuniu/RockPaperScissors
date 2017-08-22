@@ -248,3 +248,42 @@ input[name=register]{
   min-height:700px;
   min-width:436.516px;
 }
+
+#invitationHeader{
+  font-size: 30px !important;
+  text-align: center;
+  margin: auto auto 15px auto;
+}
+
+#invitationBody{
+ /* border: 1px solid black; */
+ height: 225px;
+ margin: auto;
+ display: flex;
+ /* width: 55%; */
+ justify-content: space-around;
+}
+
+#invitation{
+  height:350px;
+}
+
+#invitationBodyText{
+  font-size: 23px;
+  width: 200px;
+  text-align: center;
+  margin: auto;
+}
+
+#invitation > button{
+  height: 75px !important;
+  width: 120px !important;
+  font-size: 25px !important;
+  /* margin: auto; */
+  /* justify-content: space-evenly; */
+}
+
+#closeDialog{
+  float:right;
+  margin:0;
+}

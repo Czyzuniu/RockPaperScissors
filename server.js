@@ -68,7 +68,8 @@ app.get('/getClientInformation', function(req,res){
     }
     let userdata = {
       name: result[0].onlineId,
-      pic: avatar
+      pic: avatar,
+      isAuthenticated:req.session.isAuthenticated
     };
       res.send(userdata)
   });
@@ -133,8 +134,6 @@ app.post('/login', function(req,res){
             sql.query('UPDATE USERS SET SessionId = ? WHERE ID = ?', [sid,id], function(err, result){
                 if(err){
                   console.log(err);
-                }else{
-                  console.log(result.affectedRows);
                 }
             });
             res.send({status:"success", userCount: userCount});
@@ -148,9 +147,20 @@ app.post('/login', function(req,res){
 
 
     io.on('connection', function(socket) {
-
+      let valid = 0;
       socket.on('start', function(data){
-        users.push(data)
+        if(users.length == 0){
+          users.push(data)
+        }else{
+          for(let i of users){
+            if(i.onlineId == data.onlineId){
+              valid++;
+            }
+          }
+        }
+        if(valid == 0){
+          users.push(data)
+        }
       });
 
       socket.on('disconnect', function() {
@@ -162,27 +172,28 @@ app.post('/login', function(req,res){
         }
       })
 
+
+
       socket.on('request', function(data){
           let requestFrom = users[data.indexFrom];
           let requestTo = users[data.indexTo];
-
-          console.log(requestFrom, requestTo);
+          if (io.sockets.connected[requestTo.id]) {
+            // let record = {
+            //   OnlineIdFrom:requestFrom.onlineId,
+            //   OnlineIdTo:requestTo.onlineId,
+            //   Responded:0
+            // };
+            // sql.query('INSERT INTO REQUESTS SET ?', record, function(err,result){
+            //   if (err) {
+            //     console.log(err);
+            //   } else {
+            //
+            //   }
+            // });
+            io.sockets.connected[requestTo.id].emit('newRequest', requestFrom)
+          }
+        });
       });
-
-
-      // socket.on('nameUpdate', function(onlineId){
-      //   for(let i of users){
-      //     if(i.id == socket.id){
-      //       i.onlineId = onlineId
-      //     }
-      //   }
-      // })
-      //
-      //
-
-
-  });
-
 
 
 

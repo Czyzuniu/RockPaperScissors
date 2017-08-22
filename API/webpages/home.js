@@ -1,15 +1,12 @@
 'use strict';
 
-let socket = io.connect('http://localhost:8080', {
-  'reconnection': true,
-  'reconnectionDelay': 500,
-  'reconnectionAttempts': 10
-});
+let socket = io()
 let users = [];
 let currentUser;
 let myIndex;
+let recentReq;
 
-window.addEventListener('load', function() {
+window.addEventListener ('load', function() {
   $.ajax({
     url: '/getClientInformation',
     type: 'GET',
@@ -24,13 +21,15 @@ window.addEventListener('load', function() {
         onlineId:currentUser
       };
 
-      socket.emit('start', user);
+      if(response.isAuthenticated){
+        socket.emit('start', user);
+      }
     }
   });
   return false;
 });
 
-window.logout.addEventListener('click', function(){
+window.logout.addEventListener ('click', function() {
   $.ajax({
     url: '/logout',
     type: 'POST',
@@ -46,47 +45,30 @@ window.logout.addEventListener('click', function(){
 })
 
 
+
+socket.on ('newRequest', function(data) {
+  let dialog = window.invitation;
+  window.invitationBodyText.textContent = "You have a game request from " + data.onlineId;
+  recentReq = data.onlineId;
+  dialog.showModal();
+})
+
 socket.on('users', function(data){
   users = data;
   let isare = "is ";
   let plural = "user"
-  if(users.length > 1 || users.length == 0){
+  if (users.length > 1 || users.length == 0) {
     isare = "are ";
     plural = "users";
   }
   window.foot.textContent = "There " + isare + " " + users.length + " active " + plural
 
-  for(let i of users){
+  for (let i of users) {
     if(i.onlineId == currentUser){
       myIndex = users.indexOf(i);
     }
   }
 });
-
-
-
-
-socket.on('request', function(data){
-  console.log(data);
-  let dialog = window.dialog;
-  dialog.title = "Game request";
-  dialog.textContent = "You have a request from : " + data.onlineId;
-
-  $("#dialog").dialog({
-      buttons : {
-        "Confirm" : function() {
-          console.log("ok");
-        },
-        "Cancel" : function() {
-          $(this).dialog("close");
-        }
-      }
-    });
-
-    $("#dialog").dialog("open");
-})
-
-
 
 
 window.sendRequest.addEventListener('click', function(){
@@ -99,13 +81,18 @@ window.sendRequest.addEventListener('click', function(){
       if(i.onlineId == friendId){
         indexTo = users.indexOf(i);
         socket.emit('request', {user:i, indexTo:indexTo, indexFrom: myIndex});
-        console.log("request");
-      } else{
-        valid++;
+        alert('request sent to ' + users[indexTo].onlineId)
       }
     }
 
-    if(valid > 0){
-      alert("Sorry, there is no one with an id like this: " + friendId)
+    if(indexTo == null){
+      alert("Sorry there is no online user with an id like " + friendId)
     }
+
+});
+
+window.declineReq.addEventListener('click', function() {
+    let dialog = window.invitation;
+    dialog.close();
+    socket.emit('requestDeclined', )
 });

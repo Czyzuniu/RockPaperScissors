@@ -9,3 +9,11 @@ CREATE TABLE IF NOT EXISTS RPS.USERS (
   SessionId VARCHAR(50),
   profilepic VARCHAR(25)
 )charset 'utf8mb4';
+
+
+CREATE TABLE IF NOT EXISTS RPS.REQUESTS (
+  Id INT PRIMARY KEY auto_increment,
+  OnlineIdFrom VARCHAR(25),
+  OnlineIdTo VARCHAR(25),
+  Responded Boolean,
+)charset 'utf8mb4';
